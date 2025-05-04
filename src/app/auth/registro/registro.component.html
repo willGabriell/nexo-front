@@ -1,0 +1,62 @@
+<div class="h-screen flex items-center justify-center bg-base-200">
+
+    <div class="grid grid-cols-1 lg:grid-cols-2 w-full h-full  bg-base-100 shadow-xl rounded-xl overflow-hidden">
+
+        <div class="hidden lg:flex items-center justify-center bg-gradient-to-br from-primary to-secondary p-8">
+            <img src="https://undraw.co/api/illustrations/8a129da4-d7ab-4f1e-b67a-bc51161d4ed5" alt="Ilustração"
+                class="max-w-xs" />
+        </div>
+
+        <div class="p-10 flex flex-col justify-center">
+            <div class="max-w-md w-full mx-auto">
+                <h1 class="text-4xl font-bold mb-2 text-primary">Olá, Seja bem vindo</h1>
+                <p class="mb-4 text-base-content opacity-70">Preencha os dados para começar</p>
+
+                <div *ngIf="sucesso" role="alert" class="alert alert-success mb-4">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 shrink-0 stroke-current" fill="none"
+                        viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                    <span [innerHTML]="sucesso"></span>
+                </div>
+
+                <form class="space-y-4" #registroFrm="ngForm" (ngSubmit)="registrar()">
+                    <div>
+                        <input type="text" name="username" [(ngModel)]="username" placeholder="Usuário"
+                            class="input input-bordered w-full" required />
+                    </div>
+                    <div>
+                        <input type="email" name="email" [(ngModel)]="email" placeholder="Email"
+                            class="input input-bordered w-full" required />
+                    </div>
+                    <div>
+                        <input type="password" name="senha" [(ngModel)]="senha" placeholder="Senha"
+                            class="input input-bordered w-full" required />
+                    </div>
+                    <div>
+                        <input type="password" name="confirmaSenha" [(ngModel)]="confirmaSenha"
+                            placeholder="Confirme sua senha" class="input input-bordered w-full" required />
+                    </div>
+                    <button class="btn btn-primary w-full" type="submit">Crie sua Conta</button>
+                </form>
+
+                <div *ngIf="erro" role="alert" class="alert alert-error mt-3">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 shrink-0 stroke-current" fill="none"
+                        viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                    <span>{{erro}}</span>
+                </div>
+
+                <p class="mt-6 text-sm text-left">
+                    Já possui uma conta?
+                    <a routerLink="/login" class="link link-primary">Entrar</a>
+                </p>
+            </div>
+        </div>
+
+
+    </div>
+</div>
