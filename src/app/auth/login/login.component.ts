@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '../../core/services/auth.service';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
@@ -18,7 +18,7 @@ export class LoginComponent {
   erro: string = '';
   sucesso: string = '';
 
-  constructor(private authService: AuthService) { }
+  constructor(private authService: AuthService, private router: Router) { }
 
   login() {
     this.erro = '';
@@ -33,7 +33,7 @@ export class LoginComponent {
     }
 
     this.authService.login(loginData).subscribe({
-      next: () => { console.log("Usuário autenticado") },
+      next: () => { this.router.navigate(['dashboard']) },
       error: (err) => { this.erro = err.error.mensagem }
     })
   }
