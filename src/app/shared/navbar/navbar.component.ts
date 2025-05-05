@@ -13,6 +13,10 @@ export class NavbarComponent {
 
   constructor(private authService: AuthService, private router: Router) {}
 
+  home() {
+    this.router.navigate(['/dashboard'])
+  }
+
   logout() {
     this.authService.logout();
     this.router.navigate(['/login'])
