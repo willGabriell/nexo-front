@@ -34,6 +34,7 @@ export class AuthService {
       tap(response => {
         if (response && response.token) {
           localStorage.setItem(this.TOKEN_KEY, response.token);
+          localStorage.setItem('username', data.username);
         }
       })
     )
@@ -53,5 +54,6 @@ export class AuthService {
 
   logout(): void {
     localStorage.removeItem(this.TOKEN_KEY);
+    localStorage.removeItem('username')
   }
 }

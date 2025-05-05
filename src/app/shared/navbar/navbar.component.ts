@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../../core/services/auth.service';
 import { Router } from '@angular/router';
 import { routes } from '../../app.routes';
@@ -9,9 +9,17 @@ import { routes } from '../../app.routes';
   templateUrl: './navbar.component.html',
   styleUrl: './navbar.component.css'
 })
-export class NavbarComponent {
+export class NavbarComponent implements OnInit {
 
-  constructor(private authService: AuthService, private router: Router) {}
+  username: string = '';
+  userInitial: string = '';
+
+  constructor(private authService: AuthService, private router: Router) { }
+
+  ngOnInit(): void {
+    this.username = localStorage.getItem('username') ?? '';
+    this.userInitial = this.username?.charAt(0).toUpperCase() ?? '';
+  }
 
   home() {
     this.router.navigate(['/dashboard'])
