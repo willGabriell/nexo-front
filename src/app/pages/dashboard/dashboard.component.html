@@ -1,2 +1,42 @@
 <app-navbar></app-navbar>
-<p>dashboard works!</p>
+<section class="p-6">
+    <div class="flex justify-between items-center mb-4">
+        <h2 class="lg:text-2xl text-xl font-bold text-primary">Minhas Categorias</h2>
+        <button class="btn btn-accent font-bold" (click)="modal = true">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="bi bi-plus-circle"
+                viewBox="0 0 16 16">
+                <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16" />
+                <path
+                    d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4" />
+            </svg>
+            Nova Categoria
+        </button>
+    </div>
+
+    <div *ngIf="categorias.length === 0" class="text-gray-500">Nenhuma categoria cadastrada.</div>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+        <div *ngFor="let categoria of categorias" class="card bg-base-200 shadow-md hover:shadow-lg transition">
+            <div class="card-body hover:cursor-pointer" (click)="verCategoria(categoria.id)">
+                <h3 class="card-title">{{ categoria.nome }}</h3>
+                <p>{{ categoria.descricao }}</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div *ngIf="modal" class="fixed inset-0 flex items-center justify-center z-50">
+    <div class="bg-base-200 p-4 rounded-lg shadow-xl w-full max-w-2xl mx-4">
+        <h3 class="text-xl font-bold mb-2 text-primary">Nova Categoria</h3>
+
+        <div class="mb-2">
+            <input type="text" class="w-full p-1.5 border rounded focus:outline-none focus:ring focus:border-base-200"
+                placeholder="Digite o nome da categoria" [(ngModel)]="novaCategoria.nome">
+        </div>
+
+        <div class="flex justify-end gap-2 mt-3">
+            <button class="btn btn-sm btn-ghost" (click)="modal = false">Cancelar</button>
+            <button class="btn btn-sm btn-accent" (click)="cadastrarCategoria()">Salvar</button>
+        </div>
+    </div>
+</div>
