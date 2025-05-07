@@ -14,6 +14,8 @@ import { Router } from '@angular/router';
 export class DashboardComponent implements OnInit {
   categorias: any[] = [];
   modal: boolean = false;
+  toast: boolean = false;
+  erro: string = '';
   novaCategoria = {
     nome: ''
   };
@@ -33,14 +35,22 @@ export class DashboardComponent implements OnInit {
 
   sucessoCadastro() {
     this.modal = false;
+    this.toast = true;
     this.novaCategoria.nome = '';
     this.categoriasService.listar().subscribe({
       next: (res) => this.categorias = res,
       error: (err) => console.error('Erro ao atualizar categorias', err)
     });
+    setTimeout(() => this.toast = false, 3000)
   }
 
   cadastrarCategoria() {
+    this.erro = '';
+    if(!this.novaCategoria.nome) {
+      this.erro = "Digite o nome da sua categoria";
+      return;
+    }
+
     this.categoriasService.cadastrar(this.novaCategoria).subscribe({
       next: () => this.sucessoCadastro(),
       error: (err) => console.log(err)

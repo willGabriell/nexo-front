@@ -1,4 +1,15 @@
 <app-navbar></app-navbar>
+
+<div *ngIf="toast" class="toast toast-top toast-center">
+    <div role="alert" class="alert alert-success">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 shrink-0 stroke-current" fill="none" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+        </svg>
+        <span>Categoria Cadastrada com Sucesso!</span>
+    </div>
+</div>
+
 <section class="p-6">
     <div class="flex justify-between items-center mb-4">
         <h2 class="lg:text-2xl text-xl font-bold text-primary">Minhas Categorias</h2>
@@ -19,24 +30,29 @@
         <div *ngFor="let categoria of categorias" class="card bg-base-200 shadow-md hover:shadow-lg transition">
             <div class="card-body hover:cursor-pointer" (click)="verCategoria(categoria.id)">
                 <h3 class="card-title">{{ categoria.nome }}</h3>
-                <p>{{ categoria.descricao }}</p>
             </div>
         </div>
     </div>
 </section>
 
-<div *ngIf="modal" class="fixed inset-0 flex items-center justify-center z-50">
-    <div class="bg-base-200 p-4 rounded-lg shadow-xl w-full max-w-2xl mx-4">
-        <h3 class="text-xl font-bold mb-2 text-primary">Nova Categoria</h3>
+<div *ngIf="modal" class="fixed inset-0 flex items-center justify-center z-50 bg-black/30 backdrop-blur-sm">
+    <div class="bg-base-200 p-6 rounded-2xl shadow-2xl w-full max-w-3xl mx-4">
+        <h3 class="text-2xl font-semibold text-primary mb-4 tracking-wide">Nova Categoria</h3>
 
-        <div class="mb-2">
-            <input type="text" class="w-full p-1.5 border rounded focus:outline-none focus:ring focus:border-base-200"
-                placeholder="Digite o nome da categoria" [(ngModel)]="novaCategoria.nome">
+        <div class="mb-4">
+            <input type="text"
+                class="w-full p-3 border border-base-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition"
+                placeholder="Digite o nome da categoria" [(ngModel)]="novaCategoria.nome" />
+            <span *ngIf="erro" class="text-error text-sm">{{ erro }}</span>
         </div>
 
-        <div class="flex justify-end gap-2 mt-3">
-            <button class="btn btn-sm btn-ghost" (click)="modal = false">Cancelar</button>
-            <button class="btn btn-sm btn-accent" (click)="cadastrarCategoria()">Salvar</button>
+        <div class="flex justify-end gap-3 mt-4">
+            <button class="btn btn-ghost btn-sm" (click)="modal = false">
+                Cancelar
+            </button>
+            <button class="btn btn-primary btn-sm" (click)="cadastrarCategoria()">
+                Salvar
+            </button>
         </div>
     </div>
 </div>
