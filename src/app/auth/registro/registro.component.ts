@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { AuthService } from '../../core/services/auth.service';
@@ -12,7 +12,7 @@ import { FormsModule } from '@angular/forms'
   templateUrl: './registro.component.html',
   styleUrl: './registro.component.css'
 })
-export class RegistroComponent {
+export class RegistroComponent implements OnInit{
 
   username: string = '';
   email: string = '';
@@ -23,6 +23,11 @@ export class RegistroComponent {
   erro: string = '';
   sucesso: string = '';
 
+  ngOnInit(): void {
+    localStorage.removeItem('auth_token');
+    localStorage.removeItem('username');
+  }
+
   constructor(private authService: AuthService, private router: Router) { }
 
   registrar() {
@@ -31,29 +36,29 @@ export class RegistroComponent {
       this.erro = 'Todos os campos são obrigatórios.';
       return;
     }
-    
+
     if (!this.validarEmail(this.email)) {
       this.erro = 'E-mail inválido.';
       return;
     }
-    
+
     if (!this.validarForcaSenha(this.senha)) {
       this.erro = 'A senha precisa conter ao menos 8 caracteres, uma letra maiúscula, uma minúscula, um número e um símbolo.';
       return;
     }
-    
+
     if (this.senha !== this.confirmaSenha) {
       this.erro = 'As senhas não coincidem.';
       return;
     }
-    
+
     const novoUsuario = {
       username: this.username,
       email: this.email,
       senha: this.senha,
       role: this.role
     };
-    
+
     this.authService.register(novoUsuario).subscribe({
       next: () => this.usuarioCadastrado(),
       error: (err) => {this.erro = err.error.messagem}

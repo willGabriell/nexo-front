@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '../../core/services/auth.service';
 import { FormsModule } from '@angular/forms';
@@ -10,13 +10,17 @@ import { CommonModule } from '@angular/common';
   templateUrl: './login.component.html',
   styleUrl: './login.component.css'
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit{
 
   username: string = '';
   senha: string = '';
 
   erro: string = '';
-  sucesso: string = '';
+
+  ngOnInit(): void {
+    localStorage.removeItem('auth_token');
+    localStorage.removeItem('username');
+  }
 
   constructor(private authService: AuthService, private router: Router) { }
 
