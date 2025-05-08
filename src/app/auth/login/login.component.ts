@@ -3,6 +3,7 @@ import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '../../core/services/auth.service';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { MessageService } from '../../core/services/message.service';
 
 @Component({
   selector: 'app-login',
@@ -17,12 +18,22 @@ export class LoginComponent implements OnInit{
 
   erro: string = '';
 
+  constructor(private authService: AuthService, private router: Router, private messageService: MessageService) { }
+
   ngOnInit(): void {
     localStorage.removeItem('auth_token');
     localStorage.removeItem('username');
-  }
 
-  constructor(private authService: AuthService, private router: Router) { }
+    this.messageService.currentMessage.subscribe(message => {
+      if (message) {
+        this.erro = message;
+        this.messageService.clearMessage();
+        setTimeout(() => {
+          this.erro = ''
+        }, 3000)
+      }
+    });
+  }
 
   login() {
     this.erro = '';
