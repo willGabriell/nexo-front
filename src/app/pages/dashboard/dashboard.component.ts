@@ -25,8 +25,16 @@ export class DashboardComponent implements OnInit {
   ngOnInit(): void {
       this.categoriasService.listar().subscribe({
         next: (res) => this.categorias = res,
-        error: (err) => console.error('Erro ao carregar categorias', err)
+        error: (err) => this.tokenExpirado(err)
       })
+  }
+
+  tokenExpirado(err: any) {
+    this.erro = err.error.error || 'Sessão expirada. Faça login novamente.';
+    setTimeout(() => {
+      this.router.navigate(['login']);
+      this.toast = false;
+    }, 2000); // Aguarda 2 segundos antes de redirecionar
   }
 
   verCategoria(id: number) {
