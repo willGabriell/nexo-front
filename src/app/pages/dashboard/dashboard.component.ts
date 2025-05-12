@@ -34,11 +34,11 @@ export class DashboardComponent implements OnInit {
     setTimeout(() => {
       this.router.navigate(['login']);
       this.toast = false;
-    }, 2000); // Aguarda 2 segundos antes de redirecionar
+    }, 2000);
   }
 
   verCategoria(id: number) {
-    console.log(id);
+    this.router.navigate(['categorias/' + id + '/flashcards']);
   }
 
   sucessoCadastro() {
