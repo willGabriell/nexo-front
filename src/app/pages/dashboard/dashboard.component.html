@@ -34,7 +34,11 @@
         </button>
     </div>
 
-    <div *ngIf="categorias.length === 0" class="text-gray-500">Nenhuma categoria cadastrada.</div>
+    <div *ngIf="carregando" class="flex justify-center items-center h-32">
+        <span class="loading loading-spinner loading-lg text-primary"></span>
+    </div>
+
+    <div *ngIf="categorias.length === 0 && !carregando" class="text-gray-500">Nenhuma categoria cadastrada.</div>
 
     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
         <div *ngFor="let categoria of categorias" class="card bg-base-200 shadow-md hover:shadow-lg transition">

@@ -16,6 +16,7 @@ export class DashboardComponent implements OnInit {
   modal: boolean = false;
   toast: boolean = false;
   erro: string = '';
+  carregando: boolean = true;
   novaCategoria = {
     nome: ''
   };
@@ -24,9 +25,14 @@ export class DashboardComponent implements OnInit {
 
   ngOnInit(): void {
       this.categoriasService.listar().subscribe({
-        next: (res) => this.categorias = res,
+        next: (res) => this.listarCategorias(res),
         error: (err) => this.tokenExpirado(err)
       })
+  }
+
+  listarCategorias(res: any) {
+    this.carregando = false
+    this.categorias = res;
   }
 
   tokenExpirado(err: any) {
