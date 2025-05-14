@@ -23,7 +23,7 @@
                         </label>
                         <a class="link link-hover text-primary">Esqueceu a senha?</a>
                     </div>
-                    <button type="submit" class="btn btn-primary w-full">Entrar</button>
+                    <button type="submit" class="btn btn-primary w-full" [disabled]="isLoading">{{botaoLabel}}</button>
                 </form>
 
                 <div *ngIf="erro" role="alert" class="toast toast-top toast-center">

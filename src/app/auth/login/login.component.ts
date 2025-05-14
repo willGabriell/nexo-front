@@ -18,6 +18,9 @@ export class LoginComponent implements OnInit{
 
   erro: string = '';
 
+  botaoLabel: string = 'Entrar'
+  isLoading: boolean = false;
+
   constructor(private authService: AuthService, private router: Router, private messageService: MessageService) { }
 
   ngOnInit(): void {
@@ -39,6 +42,9 @@ export class LoginComponent implements OnInit{
     this.erro = '';
     if (!this.username || !this.senha) {
       this.erro = 'Todos os campos são obrigatórios.';
+      setTimeout(() => {
+        this.erro = ''
+      }, 3000)
       return;
     }
 
@@ -47,9 +53,19 @@ export class LoginComponent implements OnInit{
       senha: this.senha
     }
 
+    this.botaoLabel = 'Entrando...';
+    this.isLoading = true;
+
     this.authService.login(loginData).subscribe({
-      next: () => { this.router.navigate(['dashboard']) },
-      error: (err) => { this.erro = err.error.mensagem }
+      next: () => { 
+        this.isLoading = false;
+        this.router.navigate(['dashboard']) 
+      },
+      error: (err) => { 
+        this.erro = err.error.mensagem;
+        this.isLoading = false;
+        this.botaoLabel = 'Entrar';
+      }
     })
   }
 
