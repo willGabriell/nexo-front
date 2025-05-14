@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { AuthService } from '../../core/services/auth.service';
@@ -12,7 +12,7 @@ import { FormsModule } from '@angular/forms'
   templateUrl: './registro.component.html',
   styleUrl: './registro.component.css'
 })
-export class RegistroComponent implements OnInit{
+export class RegistroComponent implements OnInit {
 
   username: string = '';
   email: string = '';
@@ -22,6 +22,7 @@ export class RegistroComponent implements OnInit{
 
   erro: string = '';
   sucesso: string = '';
+  isLoading: boolean = false;
 
   ngOnInit(): void {
     localStorage.removeItem('auth_token');
@@ -34,21 +35,33 @@ export class RegistroComponent implements OnInit{
     this.erro = '';
     if (!this.username || !this.email || !this.senha || !this.confirmaSenha) {
       this.erro = 'Todos os campos são obrigatórios.';
+      setTimeout(() => {
+        this.erro = ''
+      }, 3000)
       return;
     }
 
     if (!this.validarEmail(this.email)) {
       this.erro = 'E-mail inválido.';
+      setTimeout(() => {
+        this.erro = ''
+      }, 3000)
       return;
     }
 
     if (!this.validarForcaSenha(this.senha)) {
       this.erro = 'A senha precisa conter ao menos 8 caracteres, uma letra maiúscula, uma minúscula, um número e um símbolo.';
+      setTimeout(() => {
+        this.erro = ''
+      }, 3000)
       return;
     }
 
     if (this.senha !== this.confirmaSenha) {
       this.erro = 'As senhas não coincidem.';
+      setTimeout(() => {
+        this.erro = ''
+      }, 3000)
       return;
     }
 
@@ -59,9 +72,14 @@ export class RegistroComponent implements OnInit{
       role: this.role
     };
 
+    this.isLoading = true;
+
     this.authService.register(novoUsuario).subscribe({
       next: () => this.usuarioCadastrado(),
-      error: (err) => {this.erro = err.error.messagem}
+      error: (err) => { 
+        this.erro = err.error.messagem;
+        this.isLoading = false;
+      }
     })
   }
 
@@ -82,6 +100,7 @@ export class RegistroComponent implements OnInit{
     this.confirmaSenha = '';
 
     this.sucesso = 'Usuário cadastrado com sucesso! <br> Você será redirecionado para a tela de login.';
+    this.isLoading = false;
 
     setTimeout(() => {
       this.sucesso = '';
