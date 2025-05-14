@@ -1,12 +1,13 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { environment } from '../environments/environment.prod'
 
 @Injectable({
   providedIn: 'root'
 })
 export class FlashcardService {
-  private readonly url = 'http://localhost:8080/flashcards';
+  private readonly url = `${environment.apiUrl}/flashcards`;
 
   constructor(private http: HttpClient) {}
 
