@@ -35,12 +35,6 @@ Acesse o sistema em `http://localhost:4200`.
 - `src/app/pages` — Páginas principais (dashboard, lista de flashcards)
 - `src/app/shared` — Componentes compartilhados (navbar)
 
-## Scripts disponíveis
-- `npm start` — Inicia o servidor de desenvolvimento
-
-## Configuração
-- As configurações de ambiente estão em `src/environments/`
-
 ---
 
 > Projeto desenvolvido para fins de estudo.
